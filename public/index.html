@@ -1,0 +1,23 @@
+<html>
+<head>
+	<title>Whisper</title>
+</head>
+<body>
+<h1>Whisper</h1>
+<script src="/socket.io/socket.io.js"></script>
+<script>
+  var socket = io.connect(window.location.origin);
+  console.log(window.location.origin);
+
+  socket.on('down', function (data) {
+    console.log('Message received: ' + data);
+  });
+
+  function SendMessage(contents){
+  	socket.emit('up', contents);
+  	console.log('Sent message!');
+  };
+</script>
+<button onclick="SendMessage('Hey there');">Send message</button>
+</body>
+</html>
