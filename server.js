@@ -20,8 +20,9 @@ io.sockets.on('connection', function(socket){
 	io.sockets.emit('users', io.sockets.clients().length);
 
 	socket.on('up', function(data){
-		console.log('Message uploaded: ', data);
-		io.sockets.emit('down', data);
+		var msg = JSON.parse(data);
+		console.log(msg.user + ' said \"' + msg.message + '\"');
+		io.sockets.emit('down', JSON.stringify(msg));
 	});
 
 	socket.on('disconnect', function(socket){
