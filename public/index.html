@@ -12,8 +12,9 @@
 	  var socket = io.connect(window.location.origin);
 
 	  socket.on('down', function (data) {
-	    console.log('Message received: ' + data);
-	    $('#msgLog > tbody:last').append('<tr><td>' + data + '</td></tr>');
+	  	var msg = JSON.parse(data);
+	    console.log(msg.user + ' said \"' + msg.message + '\"');
+	    $('#msgLog > tbody:last').append('<tr><td>' + msg.user + '</td><td>' + msg.message + '</td></tr>');
 	  });
 
 	  socket.on('users', function (data) {
@@ -21,8 +22,12 @@
 	    $('#connectedUsersCell').text(data + " users");
 	  });
 
-	  function SendMessage(contents){
-	  	socket.emit('up', contents);
+	  function SendMessage(){
+	  	var msgToSend = {
+	  		user: $('#nameEntry').val(),
+	  		message: $('#textEntry').val()
+	  	};
+	  	socket.emit('up', JSON.stringify(msgToSend));
 	  	console.log('Sent message!');
 	  };
 	</script>
@@ -37,6 +42,7 @@
 			<div class="span9">
 				<table class="table table-bordered" id="msgLog">
 					<thead>
+						<th>User</th>
 						<th>Message</th>
 					</thead>
 					<tbody>
@@ -51,7 +57,7 @@
 					<tbody>
 						<td class="form-inline">
 							<div class="input-append">
-								<input type="text" class="" style="width: 110px;" placeholder="James">
+								<input type="text" id="nameEntry" class="" style="width: 110px;" placeholder="James">
 								<button class="btn" type="button">Change</button>
 							</div>
 						</td>
@@ -67,8 +73,8 @@
 		</div>
 		<div class="row">
 			<div class="span9">
-				<textarea class="span6"></textarea>
-				<button class="btn btn-large pull-right" onclick="SendMessage('Hey there');">Send message</button>
+				<textarea id="textEntry" class="span6"></textarea>
+				<button class="btn btn-large pull-right" onclick="SendMessage();">Send message</button>
 			<div>
 		</div>
 	</div>
