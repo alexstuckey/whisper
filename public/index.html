@@ -18,6 +18,7 @@
 
 		  socket.on('down', function (data) {
 		    console.log('Message received: ' + data);
+		    $('#msgLog > tbody:last').append('<tr><td>' + data + '</td></tr>');
 		  });
 
 		  function SendMessage(contents){
