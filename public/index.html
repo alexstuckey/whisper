@@ -16,6 +16,11 @@
 	    $('#msgLog > tbody:last').append('<tr><td>' + data + '</td></tr>');
 	  });
 
+	  socket.on('users', function (data) {
+	    console.log('Connected users: ' + data);
+	    $('#connectedUsersCell').text(data + " users");
+	  });
+
 	  function SendMessage(contents){
 	  	socket.emit('up', contents);
 	  	console.log('Sent message!');
@@ -55,7 +60,7 @@
 						<th>Users online</th>
 					</thead>
 					<tbody>
-						<td>0</td>
+						<td id="connectedUsersCell">0</td>
 					</tbody>
 				</table>
 			</div>
