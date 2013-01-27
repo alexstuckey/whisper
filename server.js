@@ -16,10 +16,17 @@ app.get('/', function(req, res){
 
 io.sockets.on('connection', function(socket){
 	console.log('Client connected');
+	// Notify connect clients of number of users
+	io.sockets.emit('users', io.sockets.clients().length);
+
 	socket.on('up', function(data){
 		console.log('Message uploaded: ', data);
 		io.sockets.emit('down', data);
 	});
+
+	socket.on('disconnect', function(socket){
+	console.log('Client disconnected');
+});
 });
 
 server.listen(app.get('port'));
