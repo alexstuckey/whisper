@@ -8,32 +8,64 @@
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
+	<script>
+	  var socket = io.connect(window.location.origin);
+
+	  socket.on('down', function (data) {
+	    console.log('Message received: ' + data);
+	    $('#msgLog > tbody:last').append('<tr><td>' + data + '</td></tr>');
+	  });
+
+	  function SendMessage(contents){
+	  	socket.emit('up', contents);
+	  	console.log('Sent message!');
+	  };
+	</script>
 </head>
 <body>
 	<div class="container">
-		<h1 class="muted">Whisper</h1>
-		<hr>
-		<script>
-		  var socket = io.connect(window.location.origin);
-
-		  socket.on('down', function (data) {
-		    console.log('Message received: ' + data);
-		    $('#msgLog > tbody:last').append('<tr><td>' + data + '</td></tr>');
-		  });
-
-		  function SendMessage(contents){
-		  	socket.emit('up', contents);
-		  	console.log('Sent message!');
-		  };
-		</script>
-		<table class="table table-bordered" id="msgLog">
-			<thead>
-				<th>Message</th>
-			</thead>
-			<tbody>
-			</tbody>
-		</table>
-		<button onclick="SendMessage('Hey there');">Send message</button>
+		<div class="row">
+			<h1 class="muted">Whisper</h1>
+			<hr>
+		</div>
+		<div class="row">
+			<div class="span9">
+				<table class="table table-bordered" id="msgLog">
+					<thead>
+						<th>Message</th>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div class="span3">
+				<table class="table table-bordered" id="sidebar">
+					<thead>
+						<th>Name</th>
+					</thead>
+					<tbody>
+						<td class="form-inline">
+							<div class="input-append">
+								<input type="text" class="" style="width: 110px;" placeholder="James">
+								<button class="btn" type="button">Change</button>
+							</div>
+						</td>
+					</tbody>
+					<thead>
+						<th>Users online</th>
+					</thead>
+					<tbody>
+						<td>0</td>
+					</tbody>
+				</table>
+			</div>
+		</div>
+		<div class="row">
+			<div class="span9">
+				<textarea class="span6"></textarea>
+				<button class="btn btn-large pull-right" onclick="SendMessage('Hey there');">Send message</button>
+			<div>
+		</div>
 	</div>
 </body>
 </html>
