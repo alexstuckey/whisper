@@ -5,32 +5,6 @@
 	<title>Whisper</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
-	<script src="/js/jquery.min.js"></script>
-	<script src="/js/bootstrap.min.js"></script>
-	<script src="/socket.io/socket.io.js"></script>
-	<script>
-	  var socket = io.connect(window.location.origin);
-
-	  socket.on('down', function (data) {
-	  	var msg = JSON.parse(data);
-	    console.log(msg.user + ' said \"' + msg.message + '\"');
-	    $('#msgLog > tbody:last').append('<tr><td>' + msg.user + '</td><td>' + msg.message + '</td></tr>');
-	  });
-
-	  socket.on('users', function (data) {
-	    console.log('Connected users: ' + data);
-	    $('#connectedUsersCell').text(data + " users");
-	  });
-
-	  function SendMessage(){
-	  	var msgToSend = {
-	  		user: $('#nameEntry').val(),
-	  		message: $('#textEntry').val()
-	  	};
-	  	socket.emit('up', JSON.stringify(msgToSend));
-	  	console.log('Sent message!');
-	  };
-	</script>
 </head>
 <body>
 	<div class="container">
@@ -78,5 +52,31 @@
 			<div>
 		</div>
 	</div>
+	<script src="/js/jquery.min.js"></script>
+	<script src="/js/bootstrap.min.js"></script>
+	<script src="/socket.io/socket.io.js"></script>
+	<script>
+	  var socket = io.connect(window.location.origin);
+
+	  socket.on('down', function (data) {
+	  	var msg = JSON.parse(data);
+	    console.log(msg.user + ' said \"' + msg.message + '\"');
+	    $('#msgLog > tbody:last').append('<tr><td>' + msg.user + '</td><td>' + msg.message + '</td></tr>');
+	  });
+
+	  socket.on('users', function (data) {
+	    console.log('Connected users: ' + data);
+	    $('#connectedUsersCell').text(data + " users");
+	  });
+
+	  function SendMessage(){
+	  	var msgToSend = {
+	  		user: $('#nameEntry').val(),
+	  		message: $('#textEntry').val()
+	  	};
+	  	socket.emit('up', JSON.stringify(msgToSend));
+	  	console.log('Sent message!');
+	  };
+	</script>
 </body>
 </html>
