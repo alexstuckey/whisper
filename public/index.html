@@ -41,6 +41,9 @@
 	  	};
 	  	socket.emit('up', JSON.stringify(msgToSend));
 	  	console.log('Sent message!');
+
+	  	// Clear textEntry
+	  	$('#textEntry').val('');
 	  };
 
 	  $(document).ready(function(){
@@ -49,8 +52,7 @@
 			event = event || window.event;
 			if (event.keyCode == 13) {
 				// on enter key
-				$('#textButton').click(); 
-				$('#textEntry').val('');
+				$('#textButton').click();
 				}
 		  });
 	  });
