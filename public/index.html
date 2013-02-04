@@ -42,6 +42,14 @@
 	  	socket.emit('up', JSON.stringify(msgToSend));
 	  	console.log('Sent message!');
 	  };
+
+	  function enterKey(){
+	  	if (event.keyCode == 13) { 
+				document.getElementById('textButton').click(); 
+				document.getElementById('textEntry').value='';
+				return false; 
+				}
+	  }
 	</script>
 </head>
 <body>
@@ -63,11 +71,7 @@
 			</div>
 			<div class="span9" style="padding-top: 30px;">
 				<textarea id="textEntry" placeholder="Message" style="table-layout: fixed; max-height: 100px; max-width: 690px; width: 690px"
-				onkeydown="if (event.keyCode == 13) { 
-				document.getElementById('textButton').click(); 
-				document.getElementById('textEntry').value='';
-				return false; 
-				}"></textarea>
+				onkeydown="enterKey()"></textarea>
 				<button id="textButton" onclick="SendMessage();" value="Search">Send message</button>
 			</div>
 			<div class="span3" style="position: absolute; left: 700px;">
