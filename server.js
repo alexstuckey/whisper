@@ -21,7 +21,7 @@ io.sockets.on('connection', function(socket){
 
 	socket.on('up', function(data){
 		var msg = JSON.parse(data);
-		console.log(msg.user + ' said \"' + msg.message + '\"');
+		console.log(msg.user + ' said \"' + msg.message + ' on channel \"' + msg.channel + ' on sub channel \"' + '\"');
 		io.sockets.emit('down', JSON.stringify(msg));
 	});
 

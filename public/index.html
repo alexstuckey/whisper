@@ -5,53 +5,6 @@
 	<title>Whisper</title>
 	<link rel="stylesheet" type="text/css" href="css/bootstrap.min.css">
 	<link rel="stylesheet" type="text/css" href="css/main.css">
-</head>
-<body>
-	<div class="container">
-		<div class="row">
-			<h1 class="muted">Whisper</h1>
-			<hr>
-		</div>
-		<div class="row">
-			<div class="span9">
-				<table class="table table-bordered" id="msgLog">
-					<thead>
-						<th>User</th>
-						<th>Message</th>
-					</thead>
-					<tbody>
-					</tbody>
-				</table>
-			</div>
-			<div class="span3">
-				<table class="table table-bordered" id="sidebar">
-					<thead>
-						<th>Name</th>
-					</thead>
-					<tbody>
-						<td class="form-inline">
-							<div class="input-append">
-								<input type="text" id="nameEntry" class="" style="width: 110px;" placeholder="James">
-								<button class="btn" type="button">Change</button>
-							</div>
-						</td>
-					</tbody>
-					<thead>
-						<th>Users online</th>
-					</thead>
-					<tbody>
-						<td id="connectedUsersCell">0</td>
-					</tbody>
-				</table>
-			</div>
-		</div>
-		<div class="row">
-			<div class="span9">
-				<textarea id="textEntry" class="span6"></textarea>
-				<button class="btn btn-large pull-right" onclick="SendMessage();">Send message</button>
-			<div>
-		</div>
-	</div>
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
@@ -60,23 +13,100 @@
 
 	  socket.on('down', function (data) {
 	  	var msg = JSON.parse(data);
-	    console.log(msg.user + ' said \"' + msg.message + '\"');
-	    $('#msgLog > tbody:last').append('<tr><td>' + msg.user + '</td><td>' + msg.message + '</td></tr>');
+	  	if (msg.message != ""){
+	  		var userName = msg.user;
+	  		if (msg.user == ""){
+	  			userName = "Anonymous";
+	  		}
+	  		if (msg.channel == $('#channelEntry').val() && msg.subChannel == "") {
+	   		 	$('#msgLog > tbody:last').append('<tr><td>' + userName + '</td><td>' + msg.message + '</td></tr>');
+			};
+	  		if (msg.channel == $('#channelEntry').val() && msg.subChannel == $('#subChannelEntry').val() && msg.subChannel != "") {
+	    		$('#msgLog > tbody:last').append('<tr><td><font color=3399FF>' + userName + '</td><td><font color=3399FF>' + msg.message + '</td></tr>');
+			};
+		};
 	  });
 
 	  socket.on('users', function (data) {
 	    console.log('Connected users: ' + data);
-	    $('#connectedUsersCell').text(data + " users");
+	    $('#connectedUsersCell').text(data + " user(s)");
 	  });
 
 	  function SendMessage(){
 	  	var msgToSend = {
 	  		user: $('#nameEntry').val(),
-	  		message: $('#textEntry').val()
+	  		message: $('#textEntry').val(),
+	  		channel: $('#channelEntry').val(),
+	  		subChannel: $('#subChannelEntry').val(),
 	  	};
 	  	socket.emit('up', JSON.stringify(msgToSend));
 	  	console.log('Sent message!');
 	  };
 	</script>
+</head>
+<body>
+	<div class="container" style="position: relative;">
+		<div class="row">
+			<h1 class="muted">Whisper</h1>
+			<hr>
+		</div>
+		<div class="row">
+			<div class="span9" style="width: 700px; overflow: auto; max-height: 450px;">
+				<table class="table table-bordered" id="msgLog" style="table-layout: fixed; word-wrap: break-word; ">
+					<thead>
+						<th style="width: 100px; table-layout:fixed">User</th>
+						<th>Message</th>
+					</thead>
+					<tbody>
+					</tbody>
+				</table>
+			</div>
+			<div class="span9" style="padding-top: 30px;">
+				<textarea id="textEntry" placeholder="Message" style="table-layout: fixed; max-height: 100px; max-width: 690px; width: 690px"
+				onkeydown="if (event.keyCode == 13) { 
+				document.getElementById('textButton').click(); 
+				document.getElementById('textEntry').value='';
+				return false; 
+				}"></textarea>
+				<button id="textButton" onclick="SendMessage();" value="Search">Send message</button>
+			</div>
+			<div class="span3" style="position: absolute; left: 700px;">
+				<table class="table table-bordered" id="sidebar">
+					<thead>
+						<th>Username:</th>
+					</thead>
+					<tbody>
+						<td class="form-inline">
+							<div class="input-append">
+								<input type="text" id="nameEntry" class="" style="width: 185px;" placeholder="James">
+							</div>
+						</td>
+					</tbody>
+					<thead>
+						<th>Channels:</th>
+					</thead>
+					<tbody>
+						<td class="form-inline">
+							Main Channel:
+							<div class="input-append" style="padding-bottom: 10px;">
+								<input type="text" id="channelEntry" class="" style="width: 185px;" placeholder="Channel name">
+							</div>
+							Sub Channel:
+							<div class="input-append">
+								<input type="text" id="subChannelEntry" class="" style="width: 185px;" placeholder="Channel name">
+							</div>
+						</td>
+					</tbody>
+					<thead>
+						<th>Users online:</th>
+					</thead>
+					<tbody>
+						<td id="connectedUsersCell">0</td>
+					</tbody>
+				</table>
+				<p><font color='grey' size='2'>You can read everything sent in your channel even if you are in a sub channel however others not in your sub channel cannot read the messages you send.</font></p>
+			</div>
+		</div>
+	</div>
 </body>
 </html>
