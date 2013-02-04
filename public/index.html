@@ -43,13 +43,17 @@
 	  	console.log('Sent message!');
 	  };
 
-	  function enterKey(){
-	  	if (event.keyCode == 13) { 
-				document.getElementById('textButton').click(); 
-				document.getElementById('textEntry').value='';
-				return false; 
+	  $(document).ready(function(){
+		// This runs when the page is ready, interface code should be inside here
+			$('#textEntry').keyup(function(event){
+			event = event || window.event;
+			if (event.keyCode == 13) {
+				// on enter key
+				$('#textButton').click(); 
+				$('#textEntry').val('');
 				}
-	  }
+		  });
+	  });
 	</script>
 </head>
 <body>
@@ -70,8 +74,7 @@
 				</table>
 			</div>
 			<div class="span9" style="padding-top: 30px;">
-				<textarea id="textEntry" placeholder="Message" style="table-layout: fixed; max-height: 100px; max-width: 690px; width: 690px"
-				onkeydown="enterKey()"></textarea>
+				<textarea id="textEntry" placeholder="Message" style="table-layout: fixed; max-height: 100px; max-width: 690px; width: 690px"></textarea>
 				<button id="textButton" onclick="SendMessage();" value="Search">Send message</button>
 			</div>
 			<div class="span3" style="position: absolute; left: 700px;">
