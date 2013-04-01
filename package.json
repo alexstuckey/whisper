@@ -1,6 +1,6 @@
 {
 	"name": "whisper",
-	"version": "0.0.1",
+	"version": "1.0.0",
 	"author": "Alex Stuckey <alex.stuckey@gmail.com>",
 	"description": "An encrypted chat app written in HTML5 and Node.js",
 	"dependencies": {
