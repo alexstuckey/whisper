@@ -1,4 +1,4 @@
-# whisper
+# whisper v1.0.0 βeta
 
 An encrypted chat app written in HTML5 and Node.js
 
