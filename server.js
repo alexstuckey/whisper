@@ -8,6 +8,7 @@ var io = require('socket.io').listen(server);
 app.configure(function(){
 	app.set('port', 3000);
 	app.use(express.static(__dirname + '/public'));
+	io.set('log level', 2);
 })
 
 app.get('/', function(req, res){
