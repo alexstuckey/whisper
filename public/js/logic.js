@@ -10,7 +10,7 @@ socket.on('down', function (data) {
 		if (msg.channel == $('#channelEntry').val() && msg.subChannel == "") {
 			 	$('#msgLog > tbody:last').append('<tr><td>' + userName + '</td><td>' + msg.message + '</td></tr>');
 		};
-		if (msg.channel == $('#channelEntry').val() && msg.subChannel == $('#subChannelEntry').val() && msg.subChannel != "") {
+		if (msg.channel == $('#channelEntry').val()) {
 			$('#msgLog > tbody:last').append('<tr><td><font color=3399FF>' + userName + '</td><td><font color=3399FF>' + msg.message + '</td></tr>');
 		};
 	};
@@ -25,8 +25,7 @@ function SendMessage(){
 	var msgToSend = {
 		user: $('#nameEntry').val(),
 		message: $('#textEntry').val(),
-		channel: $('#channelEntry').val(),
-		subChannel: $('#subChannelEntry').val(),
+		channel: $('#channelEntry').val()
 	};
 	socket.emit('up', JSON.stringify(msgToSend));
 	console.log('Sent message!');
