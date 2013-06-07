@@ -18,7 +18,11 @@ socket.on('down', function (data) {
 
 socket.on('users', function (data) {
 	console.log('Connected users: ' + data);
-	$('#connectedUsersCell').text(data + " user(s)");
+	var userText = "users"
+	if (data == 1) {
+		userText = "user"
+	}
+	$('#connectedUsersCell').text(data + " " + userText);
 });
 
 function SendMessage(){
