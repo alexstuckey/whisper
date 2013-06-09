@@ -10,6 +10,15 @@ app.configure(function(){
 	app.set('port', 3000);
 	app.use(express.static(__dirname + '/public'));
 	io.set('log level', 2);
+
+	// A scheme of colours so that they remain constant throughout the app and can easily be changed
+	colors.setTheme({
+		userColor: 'bold',
+		messageColor: 'blue',
+		channelColor: 'magenta',
+		connectedColor: 'green',
+		disconnectedColor: 'red'
+	})
 })
 
 app.get('/', function(req, res){
@@ -23,7 +32,7 @@ io.sockets.on('connection', function(socket){
 
 	socket.on('up', function(data){
 		var msg = JSON.parse(data);
-		console.log(msg.user.bold + ' said ' + msg.message.blue + ' on ' + msg.channel.magenta);
+		console.log(msg.user.userColor + ' said ' + msg.message.messageColor + ' on ' + msg.channel.channelColor);
 		io.sockets.emit('down', JSON.stringify(msg));
 	});
 
