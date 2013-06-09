@@ -9,9 +9,66 @@
 	<script src="/js/bootstrap.min.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/js/logic.js"></script>
+	<script type="text/javascript">
+	$(window).load(function() {
+        $('#introModal').modal({
+        	'show': true,
+        	'keyboard': false,
+        	'backdrop': 'static'
+        });
+        $('#introModal').on('hidden', function() {
+        	// Set the fields on the main page to the values given in the modal window
+        	$('#nameEntry').val($('#nameEntryModal').val());
+        	$('#channelEntry').val($('#channelEntryModal').val());
+        })
+	});
+	saveModal = function () {
+		if($('#nameEntryModal').val().length != 0 && $('#channelEntryModal').val() != 0) {
+			// Data has been written into the modal fields so it is okay to use them
+			$('#introModal').modal('hide');
+		} else {
+			// Show the error alert
+			showAlert = function(message) {
+				$('#modal_alert_placeholder').html(
+					'<div class="alert alert-error"><a href="#" class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>');
+			}
+
+			showAlert('Please enter both a name and the channel which you wish to join!');
+		}
+	}
+	</script>
 </head>
 <body>
 	<div class="container" style="position: relative;">
+
+		<div id="introModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="introModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<h3 id="introModalLabel">Welcome to Whisper</h3>
+			</div>
+			<div class="modal-body">
+				<p>To get started please fill in the fields below. Just enter your name and choose the channel you wish to join!</p>
+				<br>
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label" for="nameEntryModal">Name</label>
+						<div class="controls">
+							<input class="input-large" type="text" id="nameEntryModal" placeholder="James">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="channelEntryModal">Channel</label>
+						<div class="controls">
+							<input class="input-large" type="text" id="channelEntryModal" placeholder="super-secret-name">
+						</div>
+					</div>
+				</form>
+			<div id="modal_alert_placeholder"></div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" onClick="saveModal()">Save changes</button>
+			</div>
+		</div>
+
 		<div class="row">
 			<h1 class="muted">Whisper</h1>
 			<hr>
