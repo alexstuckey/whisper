@@ -7,6 +7,7 @@
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/bootstrap-afix.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/js/logic.js"></script>
 	<script type="text/javascript">
@@ -74,7 +75,8 @@
 			<hr>
 		</div>
 		<div class="row">
-			<div class="span9" style="width: 700px; overflow: auto; max-height: 450px;">
+		<div class="span9">
+			<div class="">
 				<table class="table table-bordered" id="msgLog" style="table-layout: fixed; word-wrap: break-word; ">
 					<thead>
 						<th style="width: 100px; table-layout:fixed">User</th>
@@ -84,40 +86,43 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="span9" style="padding-top: 30px;">
-				<input type="text" id="textEntry" placeholder="Message" style="table-layout: fixed; max-height: 100px; max-width: 690px; width: 690px"></input>
-				<button id="textButton" onclick="SendMessage();" value="Search">Send message</button>
+			<div class=" input-append" style="padding-top: 30px;">
+				<input type="text" id="textEntry" placeholder="Message"></input>
+				<button id="textButton" class="btn btn-info" onclick="SendMessage();" value="Search">Send message</button>
 			</div>
-			<div class="span3" style="position: absolute; left: 700px;">
-				<table class="table table-bordered" id="sidebar">
-					<thead>
-						<th>Username:</th>
-					</thead>
-					<tbody>
-						<td class="form-inline">
-							<div class="input-append">
-								<input type="text" id="nameEntry" class="" style="width: 185px;" placeholder="James">
-							</div>
-						</td>
-					</tbody>
-					<thead>
-						<th>Channel:</th>
-					</thead>
-					<tbody>
-						<td class="form-inline">
-							<div class="input-append" style="padding-bottom: 10px;">
-								<input type="text" id="channelEntry" class="" style="width: 185px;" placeholder="Channel name">
-							</div>
-						</td>
-					</tbody>
-					<thead>
-						<th>Users online:</th>
-					</thead>
-					<tbody>
-						<td id="connectedUsersCell">0</td>
-					</tbody>
-				</table>
-				<p><font color='grey' size='3'>You can only view messages that get sent on your channel. When you send a message, it is on that same channel.</font></p>
+		</div>
+			<div class="span3">
+				<div data-spy="affix" data-offset-top="70">
+					<table class="table table-bordered" id="sidebar">
+						<thead>
+							<th>Username:</th>
+						</thead>
+						<tbody>
+							<td class="form-inline">
+								<div class="input-append">
+									<input type="text" id="nameEntry" class="" style="width: 185px;" placeholder="James">
+								</div>
+							</td>
+						</tbody>
+						<thead>
+							<th>Channel:</th>
+						</thead>
+						<tbody>
+							<td class="form-inline">
+								<div class="input-append" style="padding-bottom: 10px;">
+									<input type="text" id="channelEntry" class="" style="width: 185px;" placeholder="Channel name">
+								</div>
+							</td>
+						</tbody>
+						<thead>
+							<th>Users online:</th>
+						</thead>
+						<tbody>
+							<td id="connectedUsersCell">0</td>
+						</tbody>
+					</table>
+					<p><font color='grey' size='3'>You can only view messages that get sent on your channel. When you send a message, it is on that same channel.</font></p>
+				</div>
 			</div>
 		</div>
 	</div>
