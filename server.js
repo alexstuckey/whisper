@@ -3,6 +3,7 @@ var express = require('express');
 var app = express();
 var server = http.createServer(app);
 var io = require('socket.io').listen(server);
+var colors = require('colors');
 
 // Defining configuration
 app.configure(function(){
@@ -22,7 +23,7 @@ io.sockets.on('connection', function(socket){
 
 	socket.on('up', function(data){
 		var msg = JSON.parse(data);
-		console.log(msg.user + ' said \"' + msg.message + ' on channel \"' + msg.channel + ' on sub channel \"' + '\"');
+		console.log(msg.user.bold + ' said ' + msg.message.blue + ' on ' + msg.channel.green);
 		io.sockets.emit('down', JSON.stringify(msg));
 	});
 
