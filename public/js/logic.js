@@ -4,14 +4,14 @@ socket.on('down', function (data) {
 	var msg = JSON.parse(data);
 	if (msg.message != ""){
 		var userName = msg.user;
+		var msgClass = "";
 		if (msg.user == ""){
 			userName = "Anonymous";
+		} else if (msg.user == $('#nameEntry').val()) {
+			msgClass = "myMessage"
 		}
-		if (msg.channel == $('#channelEntry').val() && msg.subChannel == "") {
-			 	$('#msgLog > tbody:last').append('<tr><td>' + userName + '</td><td>' + msg.message + '</td></tr>');
-		};
 		if (msg.channel == $('#channelEntry').val()) {
-			$('#msgLog > tbody:last').append('<tr><td><font color=3399FF>' + userName + '</td><td><font color=3399FF>' + msg.message + '</td></tr>');
+			$('#msgLog > tbody:last').append('<tr class="' + msgClass + '"><td>' + userName + '</td><td>' + msg.message + '</td></tr>');
 		};
 	};
   });
