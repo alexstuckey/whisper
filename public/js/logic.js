@@ -31,11 +31,15 @@ function SendMessage(){
 		message: $('#textEntry').val(),
 		channel: $('#channelEntry').val()
 	};
-	socket.emit('up', JSON.stringify(msgToSend));
-	console.log('Sent message!');
 
-	// Clear textEntry
-	$('#textEntry').val('');
+	if(msgToSend.message.length != 0) {
+		socket.emit('up', JSON.stringify(msgToSend));
+		console.log('Sent message!');
+	
+		// Clear textEntry
+		$('#textEntry').val('');
+	}
+
   };
 
 $(document).ready(function(){
