@@ -23,7 +23,7 @@ io.sockets.on('connection', function(socket){
 
 	socket.on('up', function(data){
 		var msg = JSON.parse(data);
-		console.log(msg.user.bold + ' said ' + msg.message.blue + ' on ' + msg.channel.green);
+		console.log(msg.user.bold + ' said ' + msg.message.blue + ' on ' + msg.channel.magenta);
 		io.sockets.emit('down', JSON.stringify(msg));
 	});
 
