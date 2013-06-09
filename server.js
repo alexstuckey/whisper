@@ -26,7 +26,7 @@ app.get('/', function(req, res){
 })
 
 io.sockets.on('connection', function(socket){
-	console.log('Client connected');
+	console.log('Client connected'.connectedColor);
 	// Notify connect clients of number of users
 	io.sockets.emit('users', io.sockets.clients().length);
 
@@ -37,7 +37,7 @@ io.sockets.on('connection', function(socket){
 	});
 
 	socket.on('disconnect', function(socket){
-	console.log('Client disconnected');
+	console.log('Client disconnected'.disconnectedColor);
 });
 });
 
