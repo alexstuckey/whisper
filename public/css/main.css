@@ -1,0 +1,16 @@
+.affix {
+    top: 20px;
+    padding-right: 30px;
+}
+
+#messageDiv {
+	padding-top: 30px;
+}
+
+#textEntry {
+	width: 80%;
+}
+
+.myMessage {
+	color: #3399FF;
+}

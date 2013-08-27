@@ -7,17 +7,76 @@
 	<link rel="stylesheet" type="text/css" href="css/main.css">
 	<script src="/js/jquery.min.js"></script>
 	<script src="/js/bootstrap.min.js"></script>
+	<script src="/js/bootstrap-afix.js"></script>
 	<script src="/socket.io/socket.io.js"></script>
 	<script src="/js/logic.js"></script>
+	<script type="text/javascript">
+	$(window).load(function() {
+        $('#introModal').modal({
+        	'show': true,
+        	'keyboard': false,
+        	'backdrop': 'static'
+        });
+        $('#introModal').on('hidden', function() {
+        	// Set the fields on the main page to the values given in the modal window
+        	$('#nameEntry').val($('#nameEntryModal').val());
+        	$('#channelEntry').val($('#channelEntryModal').val());
+        })
+	});
+	saveModal = function () {
+		if($('#nameEntryModal').val().length != 0 && $('#channelEntryModal').val() != 0) {
+			// Data has been written into the modal fields so it is okay to use them
+			$('#introModal').modal('hide');
+		} else {
+			// Show the error alert
+			showAlert = function(message) {
+				$('#modal_alert_placeholder').html(
+					'<div class="alert alert-error"><a href="#" class="close" data-dismiss="alert">×</a><span>' + message + '</span></div>');
+			}
+
+			showAlert('Please enter both a name and the channel which you wish to join!');
+		}
+	}
+	</script>
 </head>
 <body>
 	<div class="container" style="position: relative;">
+
+		<div id="introModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="introModalLabel" aria-hidden="true">
+			<div class="modal-header">
+				<h3 id="introModalLabel">Welcome to Whisper</h3>
+			</div>
+			<div class="modal-body">
+				<p>To get started please fill in the fields below. Just enter your name and choose the channel you wish to join!</p>
+				<br>
+				<form class="form-horizontal">
+					<div class="control-group">
+						<label class="control-label" for="nameEntryModal">Name</label>
+						<div class="controls">
+							<input class="input-large" type="text" id="nameEntryModal" placeholder="James">
+						</div>
+					</div>
+					<div class="control-group">
+						<label class="control-label" for="channelEntryModal">Channel</label>
+						<div class="controls">
+							<input class="input-large" type="text" id="channelEntryModal" placeholder="super-secret-name">
+						</div>
+					</div>
+				</form>
+			<div id="modal_alert_placeholder"></div>
+			</div>
+			<div class="modal-footer">
+				<button class="btn btn-primary" onClick="saveModal()">Save changes</button>
+			</div>
+		</div>
+
 		<div class="row">
 			<h1 class="muted">Whisper</h1>
 			<hr>
 		</div>
 		<div class="row">
-			<div class="span9" style="width: 700px; overflow: auto; max-height: 450px;">
+		<div class="span9">
+			<div class="">
 				<table class="table table-bordered" id="msgLog" style="table-layout: fixed; word-wrap: break-word; ">
 					<thead>
 						<th style="width: 100px; table-layout:fixed">User</th>
@@ -27,45 +86,39 @@
 					</tbody>
 				</table>
 			</div>
-			<div class="span9" style="padding-top: 30px;">
-				<textarea id="textEntry" placeholder="Message" style="table-layout: fixed; max-height: 100px; max-width: 690px; width: 690px"></textarea>
-				<button id="textButton" onclick="SendMessage();" value="Search">Send message</button>
+			<div id="messageDiv" class="input-append">
+				<input type="text" id="textEntry" placeholder="Message"></input>
+				<button id="textButton" class="btn btn-info" onclick="SendMessage();" value="Search">Send message</button>
 			</div>
-			<div class="span3" style="position: absolute; left: 700px;">
-				<table class="table table-bordered" id="sidebar">
-					<thead>
-						<th>Username:</th>
-					</thead>
-					<tbody>
-						<td class="form-inline">
-							<div class="input-append">
+		</div>
+			<div class="span3">
+				<div data-spy="affix" data-offset-top="70">
+					<table class="table table-bordered" id="sidebar">
+						<thead>
+							<th>Username:</th>
+						</thead>
+						<tbody>
+							<td class="form-inline">
 								<input type="text" id="nameEntry" class="" style="width: 185px;" placeholder="James">
-							</div>
-						</td>
-					</tbody>
-					<thead>
-						<th>Channels:</th>
-					</thead>
-					<tbody>
-						<td class="form-inline">
-							Main Channel:
-							<div class="input-append" style="padding-bottom: 10px;">
+							</td>
+						</tbody>
+						<thead>
+							<th>Channel:</th>
+						</thead>
+						<tbody>
+							<td class="form-inline">
 								<input type="text" id="channelEntry" class="" style="width: 185px;" placeholder="Channel name">
-							</div>
-							Sub Channel:
-							<div class="input-append">
-								<input type="text" id="subChannelEntry" class="" style="width: 185px;" placeholder="Channel name">
-							</div>
-						</td>
-					</tbody>
-					<thead>
-						<th>Users online:</th>
-					</thead>
-					<tbody>
-						<td id="connectedUsersCell">0</td>
-					</tbody>
-				</table>
-				<p><font color='grey' size='3'>You can read everything sent in your channel even if you are in a sub channel however others not in your sub channel cannot read the messages you send.</font></p>
+							</td>
+						</tbody>
+						<thead>
+							<th>Users online:</th>
+						</thead>
+						<tbody>
+							<td id="connectedUsersCell">0</td>
+						</tbody>
+					</table>
+					<p><font color='grey' size='3'>You can only view messages that get sent on your channel. When you send a message, it is on that same channel.</font></p>
+				</div>
 			</div>
 		</div>
 	</div>
